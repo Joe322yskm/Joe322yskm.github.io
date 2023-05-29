@@ -1,0 +1,61 @@
+/*由上至下依序五個特效*/
+/*第一個CSS特效*/
+h1 {
+  color: white;
+  background-color: #c9c92f;
+  text-shadow: 3px 3px 6px #000000;
+  text-align: center;
+}
+/*第二個CSS特效*/
+img {
+  width: 40px;
+  height: 40px;
+  opacity: 0.3;
+}
+img:hover {
+  width: 100px;
+  height: 90px;
+  opacity: 1;
+}
+/*第三個CSS特效*/
+.square {
+  width: 20px;
+  height: 20px;
+  background-color: #4a4aff;
+  transition: width 3s, height 3s, transform 3s, background 2s ease-in;
+}
+.square:hover {
+  width: 80px;
+  height: 80px;
+  background-color: #b15bff;
+  transform: rotate(180deg);
+}
+/*第四個CSS特效*/
+div.taiwanValue {
+  width: 30px;
+  height: 50px;
+  background-color: tomato;
+  transition: width 2s;
+}
+.taiwanValue:hover {
+  width: 1000px;
+}
+/*第五個CSS特效*/
+.ocean {
+  position: fixed;
+  bottom: 0;
+  padding: 10;
+  text-align: center;
+  margin: auto;
+  color: black;
+  font-size: 20px;
+  color: yellow;
+}
+#ocean {
+  height: 30px;
+  background-image: linear-gradient(
+    to right,
+    rgba(30, 144, 255, 0.5),
+    rgba(0, 0, 255, 0.9)
+  );
+}

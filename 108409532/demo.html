@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>匯率轉換計算機</title>
+    <link rel="stylesheet" href="mystyle.css" />
+  </head>
+  <body>
+    <h1>匯率轉換計算機</h1>
+    <p>請輸入台幣金額：</p>
+    <img src="money.jpg" />
+    <input type="number" id="twd" placeholder="ex:100" />
+    <button onclick="convert()">開始計算</button>
+    <button onclick="restart()">重新計算</button>
+    <p>轉換結果：</p>
+    <ul id="result"></ul>
+
+    <script>
+      var rateDoc = {};
+
+      function convert() {
+        var twd = document.getElementById("twd").value;
+
+        //(5)檢查功能
+        if (twd <= 0) {
+          alert("請輸入有效的金額!");
+          restart();
+          return;
+        }
+
+        // (2)讀取rate.xml檔案
+        var xhttp = new XMLHttpRequest();
+        xhttp.open("GET", "rate.xml", true);
+        xhttp.onreadystatechange = function () {
+          if (xhttp.readyState == 4 && xhttp.status == 200) {
+            var xml = xhttp.responseXML;
+            var rates = xml.getElementsByTagName("rate");
+
+            // 將匯率資訊按照for迴圈跑出來
+            for (var i = 0; i < rates.length; i++) {
+              var currency = rates[i].getAttribute("currency");
+              var rate = rates[i].textContent;
+              rateDoc[currency] = rate;
+            }
+
+            // 計算轉換後的金額
+            var usd = twd * rateDoc["USD"];
+            var eur = twd * rateDoc["EUR"];
+            var jpy = twd * rateDoc["JPY"];
+            var krw = twd * rateDoc["KRW"];
+            var aud = twd * rateDoc["AUD"];
+
+            // 顯示轉換結果
+            var result = document.getElementById("result");
+            result.innerHTML =
+              "<li>" +
+              usd.toFixed(2) +
+              " 美元</li>" +
+              "<li>" +
+              eur.toFixed(2) +
+              " 歐元</li>" +
+              "<li>" +
+              jpy.toFixed(2) +
+              " 日圓</li>" +
+              "<li>" +
+              krw.toFixed(2) +
+              " 韓元</li>" +
+              "<li>" +
+              aud.toFixed(2) +
+              " 澳幣</li>";
+          }
+        };
+
+        xhttp.send();
+      }
+
+      //(4)重新開始功能
+      function restart() {
+        document.getElementById("twd").value = "";
+        document.getElementById("result").innerHTML = "";
+        rateDoc = {};
+      }
+    </script>
+
+    <div class="square"></div>
+    <br /><br />
+    先不管匯率了，指向這裡查看你的台灣價值
+    <div class="taiwanValue"></div>
+    <div class="ocean" id="ocean">匯率數據參考2023/05/29 台灣銀行賣出牌價</div>
+  </body>
+</html>
